@@ -1,0 +1,41 @@
+%btn-base {
+	border: 0;
+	top: 0;
+	position: relative;
+	color: var(--text-color);
+	text-decoration: none;
+	font-size: 1.75rem;
+	font-weight: 900;
+	text-transform: uppercase;
+	text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.06);
+	cursor: pointer;
+
+	display: block;
+	padding: 20px 50px;
+	border-radius: 10px;
+	margin: 50px auto;
+	text-align: center;
+	/*Styles for transition*/
+	transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out,
+		border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out,
+		top 0.1s ease-in-out;
+
+	&:active {
+		position: relative;
+		top: 6px;
+		border: 0;
+	}
+}
+
+.btn-primary {
+	@extend %btn-base;
+	background-color: var(--contrast-color);
+
+	box-shadow: 0px 9px 0px var(--contrast-color-dark),
+		0px 10px 15px rgba(0, 0, 0, 0.2);
+
+	&:active {
+		box-shadow: 0px 3px 0px var(--contrast-color-dark),
+			0px 6px 9px rgba(0, 0, 0, 0.35);
+	}
+}

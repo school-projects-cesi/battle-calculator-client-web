@@ -1,0 +1,114 @@
+// Conteneur
+// ==================
+$container-padding: 20px;
+$container-width: calc(100% - #{$container-padding} * 2);
+
+// Container
+// ==============
+.container {
+	box-sizing: border-box;
+	width: 100%;
+	padding-left: calc(50% - #{$container-width} / 2);
+	padding-right: calc(50% - #{$container-width} / 2);
+}
+
+.container-full {
+	box-sizing: border-box;
+	width: 100%;
+	padding-left: $container-padding;
+	padding-right: $container-padding;
+}
+
+.container-margin {
+	margin-left: auto;
+	margin-right: auto;
+	width: $container-width;
+}
+
+.container-narrow {
+	max-width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// Ratios
+// ==================
+.ratio {
+	height: 0;
+	padding-bottom: 56.25%;
+	position: relative;
+
+	& > * {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+// Horizontal
+// ==================
+%flex,
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.flex.center {
+	justify-content: center;
+	align-items: center;
+}
+.flex.start {
+	justify-content: flex-start;
+}
+
+.inline-1 {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > * + * {
+		margin-left: space(1);
+	}
+}
+
+// Layout
+// ==================
+.sticky {
+	position: sticky;
+	top: space(3);
+}
+
+// Spaces
+// =============
+@for $i from 0 through 10 {
+	.p-#{$i} {
+		padding: space($i) !important;
+	}
+	.pt-#{$i},
+	.py-#{$i} {
+		padding-top: space($i) !important;
+	}
+	.pb-#{$i},
+	.py-#{$i} {
+		padding: space($i) !important;
+		padding-bottom: space($i) !important;
+	}
+	.mt-#{$i} {
+		margin-top: space($i) !important;
+	}
+	.mb-#{$i} {
+		margin-bottom: space($i) !important;
+	}
+	.ml-#{$i},
+	.mx-#{$i} {
+		margin-left: space($i) !important;
+	}
+	.mr-#{$i},
+	.mx-#{$i} {
+		margin-right: space($i) !important;
+	}
+}

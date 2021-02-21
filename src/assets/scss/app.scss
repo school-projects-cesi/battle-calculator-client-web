@@ -1,0 +1,72 @@
+// Outils
+// ==================
+@import 'tools/functions';
+@import 'tools/variables';
+@import 'tools/reset';
+@import 'tools/mixins';
+@import 'tools/layout';
+@import 'tools/typography';
+@import 'tools/animations';
+
+// Generic
+// ==================
+:root {
+	--primary-color: #{$color};
+	--primary-color-gradient: #{$color-gradient};
+	--contrast-color: #{$color-contrast};
+	--contrast-color-dark: #{$color-contrast-dark};
+	--primary-dark-color: rgba(0, 0, 0, 0.15);
+	--text-color: #{$color-text};
+	--success-color: #{$color-green};
+	--danger-color: #{$color-red};
+}
+
+html {
+	font-size: $base-font-size * 1px;
+	height: 100%;
+}
+body {
+	font-family: $font;
+	font-size: 1.1rem;
+	font-weight: 500;
+	color: $color-text;
+	line-height: 1.6;
+	background: $color-background;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	// footer
+	position: relative;
+	min-height: 100%;
+}
+.background {
+	background: var(--primary-color-gradient);
+	transition: all 0.5s;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+::selection {
+	background: $color-contrast-light;
+	color: $color-text-dark;
+}
+
+// Modules
+// ==================
+// @import 'modules/navbar';
+// @import 'modules/header';
+// @import 'modules/section';
+// @import 'modules/skill';
+// @import 'modules/card';
+@import 'modules/button';
+// @import 'modules/pagination';
+// @import 'modules/form';
+// @import 'modules/hero';
+// @import 'modules/tag';
+// @import 'modules/category';
+// @import 'modules/scroll-reveal';
+// @import 'modules/highlight';

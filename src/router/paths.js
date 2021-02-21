@@ -2,6 +2,7 @@
 const AppPaths = {
 	HOME: '/',
 	ABOUT: '/about',
+	LOGIN: '/login',
 }
 
 // exports

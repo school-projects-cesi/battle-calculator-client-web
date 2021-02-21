@@ -1,0 +1,47 @@
+// Basics
+// ==================
+$base-font-size: 16;
+
+// Colors
+// ==================
+// color main
+$color: #845ec2;
+$color-light: #b856d3;
+$color-dark: #9040cc;
+$color-gradient: linear-gradient(135deg, $color-dark, $color-light 19%, $color);
+
+$color-contrast: #ffc75f;
+$color-contrast-light: lighten($color-contrast, 20%);
+$color-contrast-dark: darken($color-contrast, 20%);
+
+// other
+$color-border: #d5e3ec;
+$color-btn: #2a2a2a;
+
+// color text
+$color-text: #f6f6f6;
+$color-text-dark: #5f5f5f;
+$color-text-muted: #a5b1b8;
+
+// color background
+$color-background: transparent;
+
+// attention
+$color-red: #fb4635;
+$color-green: #41cf7c;
+$color-yellow: #feb32b;
+
+// Responsivity
+// ==================
+$breakpoints: (
+	'small': 767px,
+	'medium': 992px,
+	'large': 1200px,
+);
+
+// Others
+// ==================
+$shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$gap: rem(20);
+$space: rem(8);
+$transition: all 0.2s cubic-bezier(0.86, 0, 0.07, 1);
