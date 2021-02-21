@@ -11,7 +11,7 @@ $color-dark: #9040cc;
 $color-gradient: linear-gradient(135deg, $color-dark, $color-light 19%, $color);
 
 $color-contrast: #ffc75f;
-$color-contrast-light: lighten($color-contrast, 20%);
+$color-contrast-light: lighten($color-contrast, 5%);
 $color-contrast-dark: darken($color-contrast, 20%);
 
 // other

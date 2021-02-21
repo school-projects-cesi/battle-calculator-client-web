@@ -37,7 +37,7 @@ $font-alt: 'Poppins', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI'
 
 h1 {
 	font-family: $font-alt;
-	font-weight: 700;
+	font-weight: 800;
 	font-style: normal;
 	text-transform: uppercase;
 	font-size: rem(42);
@@ -45,7 +45,7 @@ h1 {
 }
 
 h2 {
-	font-weight: 700;
+	font-weight: 800;
 	font-style: normal;
 	font-size: rem(32);
 	line-height: 1.2;
@@ -81,10 +81,17 @@ small {
 	font-weight: 900;
 	font-size: rem(65);
 	@include text3d($color-text);
+
+	@include down('medium') {
+		font-size: rem(50);
+	}
 }
 
 // Alignements
 // ==================
+.text-left {
+	text-align: left !important;
+}
 .text-right {
 	text-align: right !important;
 }
@@ -96,4 +103,7 @@ small {
 }
 .text-muted {
 	color: $color-light;
+}
+.text-uppercase {
+	text-transform: uppercase;
 }
