@@ -1,5 +1,5 @@
 <template>
-	<div class="container-full">
+	<div class="main-container container-full">
 		<div class="background"></div>
 		<div>
 			<router-view />

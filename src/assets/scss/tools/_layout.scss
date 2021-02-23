@@ -5,6 +5,10 @@ $container-width: calc(100% - #{$container-padding} * 2);
 
 // Container
 // ==============
+.main-container {
+	padding-top: space(6);
+}
+
 .container {
 	box-sizing: border-box;
 	width: 100%;
@@ -57,14 +61,18 @@ $container-width: calc(100% - #{$container-padding} * 2);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
 
-.flex.center {
-	justify-content: center;
-	align-items: center;
-}
-.flex.start {
-	justify-content: flex-start;
+	&.center {
+		justify-content: center;
+		align-items: center;
+	}
+	&.start {
+		justify-content: flex-start;
+	}
+
+	&.column {
+		flex-direction: column;
+	}
 }
 
 .inline-1 {
@@ -112,4 +120,8 @@ $container-width: calc(100% - #{$container-padding} * 2);
 	.mx-#{$i} {
 		margin-right: space($i) !important;
 	}
+}
+
+.w-100 {
+	width: 100%;
 }

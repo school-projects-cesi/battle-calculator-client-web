@@ -1,8 +1,8 @@
 <template>
-	<div class="home pt-6">
+	<div class="home">
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
-			<a class="btn-primary" href="create.html">Commencer une<br />nouvelle partie</a>
+			<a class="btn-primary mt-3" href="create.html">Commencer une<br />nouvelle partie</a>
 		</div>
 
 		<div class="scoreboard mt-5">
