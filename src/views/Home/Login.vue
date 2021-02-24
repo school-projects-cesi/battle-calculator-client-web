@@ -1,15 +1,15 @@
 <template>
 	<div class="login">
 		<h1>Connexion</h1>
-		<form class="flex center column mt-2" @submit.prevent="loginUser">
+		<form class="flex center column mt-2" @submit.prevent="submit">
 			<div class="form-container flex center column">
 				<div class="form-group">
 					<label>Email</label>
-					<input v-model="email" type="email" placeholder="Email" />
+					<input v-model="form.username" name="username" placeholder="Email" />
 				</div>
 				<div class="form-group">
 					<label>Mot de passe</label>
-					<input v-model="password" type="password" placeholder="Mot de passe" />
+					<input v-model="form.password" type="password" placeholder="Mot de passe" />
 				</div>
 				<button class="btn-primary small mt-3 w-100" type="submit">Login</button>
 			</div>
@@ -18,23 +18,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import router from '@/router'
+import AppPaths from '@/router/paths'
+
 export default {
 	data() {
 		return {
-			email: '',
-			password: '',
+			form: {
+				username: '',
+				password: '',
+			},
 		}
 	},
 	methods: {
-		async loginUser() {
+		...mapActions(['LogIn']),
+		async submit() {
 			try {
-				const response = await this.$http.post('/auth/login', this.login)
-				const { token } = response.data.data
-				localStorage.setItem('user', token)
-				// navigate to a protected resource
-				this.$router.push('/me')
-			} catch (err) {
-				console.log(err.response)
+				await this.LogIn({
+					username: this.form.username,
+					password: this.form.password,
+				})
+				router.push(AppPaths.HOME)
+			} catch (error) {
+				console.error(error)
 			}
 		},
 	},
@@ -42,8 +49,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/scss/tools/_functions.scss';
-@import '../../assets/scss/tools/_variables.scss';
+@import '../../assets/styles/tools/_functions.scss';
+@import '../../assets/styles/tools/_variables.scss';
 
 .login {
 	text-align: center;

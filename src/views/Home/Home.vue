@@ -18,23 +18,18 @@
 				</thead>
 
 				<tbody>
-					<tr>
-						<td><b>#1</b></td>
-						<td class="text-left">Kristen</td>
-						<td>23</td>
-						<td>Hier</td>
+					<tr v-if="!games.length">
+						<td colspan="20" class="text-center empty-td">
+							aucun joueur n'a relevé le défis !
+						</td>
 					</tr>
-					<tr>
-						<td><b>#2</b></td>
-						<td class="text-left">Nathan</td>
-						<td>20</td>
-						<td>Hier</td>
-					</tr>
-					<tr>
-						<td><b>#103</b></td>
-						<td class="text-left">Kilian</td>
-						<td>3</td>
-						<td>Aujourd'hui</td>
+					<tr v-for="game in games" :key="game">
+						<td>
+							<b>#{{ game.position }}</b>
+						</td>
+						<td class="text-left">{{ game.userName }}</td>
+						<td>{{ game.score }}</td>
+						<td>{{ game.date }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -42,12 +37,47 @@
 	</div>
 </template>
 
+<script>
+import service from '@/services/games.service'
+
+export default {
+	name: 'Home',
+	data() {
+		return {
+			games: [],
+			interval: undefined,
+		}
+	},
+
+	async created() {
+		this.games = await this.getGames(1)
+		// this.interval = setInterval(() => this.getGames(), 10000)
+	},
+	methods: {
+		getGames: async (level) => {
+			const response = await service.best(level)
+			if (response.status !== 200 || !response.data) {
+				alert('Une erreur est survenue pendant le chargement du top score')
+				return undefined
+			}
+
+			return response.data.result
+		},
+	},
+}
+</script>
+
 <style lang="scss" scoped>
+@import '../../assets/styles/tools/_functions.scss';
+@import '../../assets/styles/tools/_variables.scss';
+
 .home {
 	text-align: center;
 
 	.buttons {
 		display: flex;
+		justify-content: center;
+		margin: space(12) 0;
 	}
 
 	.scoreboard {
@@ -87,7 +117,7 @@
 					td {
 						padding: 5px 15px;
 
-						&:first-child {
+						&:first-child:not(.empty-td) {
 							background-color: rgba(0, 0, 0, 0.075);
 						}
 					}
