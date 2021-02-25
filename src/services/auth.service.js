@@ -1,6 +1,6 @@
 // imports
 import axios from 'axios'
-import store from '../store'
+import store from '@/store'
 
 // config
 const url = '/auth'

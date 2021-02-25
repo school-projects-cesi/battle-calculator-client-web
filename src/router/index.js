@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store'
-import Home from '../views/Home/Home.vue'
+import store from '@/store'
+import Home from '@/views/Home/Home.vue'
 import AppPaths from './paths'
 
 const routes = [
@@ -13,12 +13,12 @@ const routes = [
 	{
 		path: AppPaths.LOGIN,
 		name: 'Login',
-		component: () => import(/* webpackChunkName: "about" */ '../views/Home/Login.vue'),
+		component: () => import('@/views/Home/Login.vue'),
 	},
 ]
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
+	history: createWebHistory(process.env.VUE_APP_BASE_URL),
 	routes,
 })
 

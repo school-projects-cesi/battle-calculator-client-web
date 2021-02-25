@@ -1,8 +1,8 @@
 // imports
 import axios from 'axios'
-import store from '../store'
-import router from '../router'
-import AppPaths from '../router/paths'
+import store from '@/store'
+import router from '@/router'
+import AppPaths from '@/router/paths'
 
 // main
 const configureAxios = () => {
