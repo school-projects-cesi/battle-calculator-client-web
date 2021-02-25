@@ -1,5 +1,5 @@
 // imports
-import axios from 'axios'
+import service from '@/services/auth.service'
 
 // data
 const state = {
@@ -14,7 +14,7 @@ const getters = {
 
 const actions = {
 	async Register({ dispatch }, form) {
-		await axios.post('/auth/register', form)
+		await service.register(form)
 		const UserForm = new FormData()
 		UserForm.append('username', form.username)
 		UserForm.append('password', form.password)
@@ -22,15 +22,14 @@ const actions = {
 	},
 
 	async LogIn({ commit }, user) {
-		const response = await axios.post('/auth/login', user)
+		const response = await service.login(user)
 		if (response.status !== 200) throw new Error('Une erreur est survenue')
 
 		await commit('setUser', response.data?.result?.token)
 	},
 
 	async LogOut({ commit }) {
-		const user = null
-		commit('logout', user)
+		commit('logout', null)
 	},
 }
 

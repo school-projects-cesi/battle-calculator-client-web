@@ -1,19 +1,13 @@
 // imports
 import axios from 'axios'
-import store from '@/store'
 
 // config
 const url = '/auth'
 
 // main
-const login = (credentials) => axios.get(`${url}/login`, credentials)
-
-const authConfig = () => ({
-	headers: {
-		Authorization: `Bearer ${store.getters.StateUser}`,
-	},
-})
+const register = (credentials) => axios.post(`${url}/register`, credentials)
+const login = (credentials) => axios.post(`${url}/login`, credentials)
 
 // exports
-const service = { login, authConfig }
+const service = { login, register }
 export default service
