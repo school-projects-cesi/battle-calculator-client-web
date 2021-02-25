@@ -1,0 +1,30 @@
+$background: #ffffff;
+
+form {
+	.form-group {
+		margin-bottom: space(2);
+
+		label {
+			font-size: $base-font-size * 0.9px;
+			letter-spacing: 0.1rem;
+			font-weight: 900;
+			transition: $transition;
+			color: $color-text-muted;
+			display: block;
+			text-transform: uppercase;
+			text-align: left;
+		}
+
+		input {
+			color: $color-text-dark;
+			margin: 0 auto;
+			padding: space(1) space(1.5);
+			border-radius: 0.2rem;
+			background-color: $background;
+			border: none;
+			width: 100%;
+			display: block;
+			transition: $transition;
+		}
+	}
+}
