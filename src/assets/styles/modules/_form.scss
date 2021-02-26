@@ -3,6 +3,7 @@ $background: #ffffff;
 form {
 	.form-group {
 		margin-bottom: space(2);
+		width: 100%;
 
 		label {
 			font-size: $base-font-size * 0.9px;
@@ -16,6 +17,7 @@ form {
 		}
 
 		input {
+			outline: none;
 			color: $color-text-dark;
 			margin: 0 auto;
 			padding: space(1) space(1.5);
@@ -25,6 +27,22 @@ form {
 			width: 100%;
 			display: block;
 			transition: $transition;
+			border: 3px solid $color-text-muted;
+			width: 100%;
+
+			&:focus {
+				border: 3px solid $color-contrast;
+			}
+
+			&.is-invalid {
+				border-color: $color-red;
+			}
+		}
+
+		.input-error {
+			font-size: 0.9rem;
+			color: $color-red;
+			line-height: 1px;
 		}
 	}
 }
