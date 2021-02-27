@@ -51,15 +51,30 @@ export default {
 	},
 	methods: {
 		...mapActions(['LogIn']),
-		async onSubmit(values) {
+		async onSubmit(values, actions) {
 			try {
 				await this.LogIn({
-					username: values.username,
+					username: values.email,
 					password: values.password,
 				})
+				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
 				router.push(AppPaths.HOME)
-			} catch (error) {
-				console.error(error)
+			} catch (err) {
+				const { response } = err
+				if (response) {
+					const { data } = response
+					if (data) {
+						const { errors, title } = data
+						if (errors) {
+							Object.entries(errors).forEach(([key, error]) =>
+								actions.setFieldError(key.toLowerCase(), error)
+							)
+						} else if (title) this.$swal({ icon: 'error', title })
+					}
+					return
+				}
+
+				this.$swal({ icon: 'error', title: 'Une erreur est survenue.' })
 			}
 		},
 	},

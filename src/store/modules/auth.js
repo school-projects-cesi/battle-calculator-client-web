@@ -23,8 +23,6 @@ const actions = {
 
 	async LogIn({ commit }, user) {
 		const response = await service.login(user)
-		if (!response || response.status !== 200) throw new Error('Une erreur est survenue')
-		// TODO: changer le throw
 		await commit('setUser', response.data?.result?.token)
 	},
 

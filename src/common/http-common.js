@@ -17,7 +17,6 @@ const configureAxios = () => {
 	const responseInterceptor = [
 		undefined,
 		(error) => {
-			console.log('ERROR ERROR ERROR')
 			if (error) {
 				const originalRequest = error.config
 				if (error.response.status === 401 && !originalRequest._retry) {
@@ -26,7 +25,7 @@ const configureAxios = () => {
 					return router.push(AppPaths.LOGIN)
 				}
 			}
-			return null
+			throw error
 		},
 	]
 
