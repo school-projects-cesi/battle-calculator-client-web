@@ -1,0 +1,10 @@
+@import '../tools/variables';
+@import '~sweetalert2/src/variables';
+
+$swal2-success: $color-green;
+$swal2-success-border: rgba($color-green, 0.25);
+$swal2-error: $color-red;
+$swal2-warning: $color-yellow;
+$swal2-toast-box-shadow: 0 0 0.625em rgba(0, 0, 0, 0.4);
+
+@import '~sweetalert2/src/sweetalert2';
