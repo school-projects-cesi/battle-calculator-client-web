@@ -1,13 +1,22 @@
 <template>
-	<div class="login">
-		<h1>Connexion</h1>
+	<div class="register">
+		<h1>S'enregistrer</h1>
 		<Form
 			v-slot="{ errors }"
 			class="flex center column mt-2"
-			:validation-schema="loginSchema"
+			:validation-schema="registerSchema"
 			@submit="onSubmit"
 		>
 			<div class="form-container flex center column">
+				<div class="form-group">
+					<label>Nom d'utilisateur</label>
+					<Field
+						name="username"
+						placeholder="Nom d'utilisateur"
+						:class="{ 'is-invalid': errors.username }"
+					/>
+					<ErrorMessage class="input-error" name="username" />
+				</div>
 				<div class="form-group">
 					<label>Email</label>
 					<Field
@@ -27,19 +36,16 @@
 					/>
 					<ErrorMessage class="input-error" name="password" />
 				</div>
-				<button class="btn-primary small mt-3 w-100" type="submit">Login</button>
+				<button class="btn-primary small mt-3 w-100" type="submit">S'enregistrer</button>
 			</div>
 		</Form>
-		<div class="buttons">
-			<router-link class="btn-primary mt-3" :to="registerPath">S'enregistrer</router-link>
-		</div>
 	</div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { Field, Form, ErrorMessage } from 'vee-validate'
-import loginSchema from '@/services/models/login.model'
+import { Field, Form } from 'vee-validate'
+import registerSchema from '@/services/models/register.model'
 import router from '@/router'
 import AppPaths from '@/router/paths'
 
@@ -47,13 +53,9 @@ export default {
 	components: {
 		Field,
 		Form,
-		ErrorMessage,
 	},
 	data() {
-		return {
-			loginSchema,
-			registerPath: AppPaths.REGISTER,
-		}
+		return { registerSchema }
 	},
 	methods: {
 		...mapActions(['LogIn']),
@@ -61,6 +63,7 @@ export default {
 			try {
 				await this.LogIn({
 					username: values.email,
+					email: values.email,
 					password: values.password,
 				})
 				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
@@ -91,7 +94,7 @@ export default {
 @import '../../assets/styles/tools/_functions.scss';
 @import '../../assets/styles/tools/_variables.scss';
 
-.login {
+.register {
 	h1 {
 		text-align: center;
 	}
