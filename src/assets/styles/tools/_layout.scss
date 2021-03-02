@@ -7,6 +7,8 @@ $container-width: calc(100% - #{$container-padding} * 2);
 // ==============
 .main-container {
 	padding-top: space(6);
+	height: 100vh;
+	min-height: 100vh;
 }
 
 .container {
