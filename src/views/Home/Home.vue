@@ -2,7 +2,7 @@
 	<div class="home">
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
-			<router-link class="btn-primary mt-3" :to="createGamePath"
+			<router-link class="btn-primary mt-3" :to="{ name: 'GameCreate' }"
 				>Commencer une<br />nouvelle partie</router-link
 			>
 		</div>
@@ -41,7 +41,6 @@
 
 <script>
 import service from '@/services/games.service'
-import AppPath from '@/router/paths'
 
 export default {
 	name: 'Home',
@@ -49,7 +48,6 @@ export default {
 		return {
 			games: [],
 			interval: undefined,
-			createGamePath: AppPath.GAME_CREATE,
 		}
 	},
 

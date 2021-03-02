@@ -1,8 +1,11 @@
+// imports
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import Home from '@/views/Home/Home.vue'
+import { Create, Play } from '@/views/Games'
 import AppPaths from './paths'
 
+// main
 const routes = [
 	{
 		path: AppPaths.HOME,
@@ -18,12 +21,14 @@ const routes = [
 	{
 		path: AppPaths.GAME_CREATE,
 		name: 'GameCreate',
-		component: () => import('@/views/Game/Create.vue'),
+		component: Create,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: AppPaths.GAME_PLAY,
 		name: 'GamePlay',
-		component: () => import('@/views/Game/Play.vue'),
+		component: Play,
+		meta: { requiresAuth: true },
 	},
 ]
 
@@ -44,4 +49,5 @@ router.beforeEach((to, _, next) => {
 	}
 })
 
+// exports
 export default router

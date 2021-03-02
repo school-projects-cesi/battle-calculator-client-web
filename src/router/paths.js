@@ -2,8 +2,8 @@
 const AppPaths = {
 	HOME: '/',
 	LOGIN: '/login',
-	GAME_CREATE: '/games/create',
-	GAME_PLAY: '/games/play',
+	GAME_CREATE: '/games/new',
+	GAME_PLAY: '/games/play/:id',
 }
 
 // exports

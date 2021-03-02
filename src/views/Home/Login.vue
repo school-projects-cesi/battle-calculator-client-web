@@ -37,8 +37,6 @@
 import { mapActions } from 'vuex'
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import loginSchema from '@/services/models/login.model'
-import router from '@/router'
-import AppPaths from '@/router/paths'
 
 export default {
 	components: {
@@ -47,7 +45,9 @@ export default {
 		ErrorMessage,
 	},
 	data() {
-		return { loginSchema }
+		return {
+			loginSchema,
+		}
 	},
 	methods: {
 		...mapActions(['LogIn']),
@@ -58,7 +58,7 @@ export default {
 					password: values.password,
 				})
 				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
-				router.push(AppPaths.HOME)
+				this.$router.push({ name: 'Home' })
 			} catch (err) {
 				const { response } = err
 				if (response) {
@@ -88,14 +88,6 @@ export default {
 .login {
 	h1 {
 		text-align: center;
-	}
-
-	.form-container {
-		background-color: rgba(255, 255, 255, 0.2);
-		padding: space(5) space(12);
-		border-radius: $border-radius;
-		width: 100%;
-		max-width: 550px;
 	}
 }
 </style>
