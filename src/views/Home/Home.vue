@@ -2,7 +2,9 @@
 	<div class="home">
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
-			<a class="btn-primary mt-3" href="create.html">Commencer une<br />nouvelle partie</a>
+			<router-link class="btn-primary mt-3" :to="createGamePath"
+				>Commencer une<br />nouvelle partie</router-link
+			>
 		</div>
 
 		<div class="scoreboard mt-5">
@@ -39,6 +41,7 @@
 
 <script>
 import service from '@/services/games.service'
+import AppPath from '@/router/paths'
 
 export default {
 	name: 'Home',
@@ -46,6 +49,7 @@ export default {
 		return {
 			games: [],
 			interval: undefined,
+			createGamePath: AppPath.GAME_CREATE,
 		}
 	},
 
@@ -56,8 +60,8 @@ export default {
 	methods: {
 		getGames: async (level) => {
 			const response = await service.best(level)
-			if (response.status !== 200 || !response.data) {
-				alert('Une erreur est survenue pendant le chargement du top score')
+			if (response.status !== 200) {
+				this.$swal({ title: 'Une erreur est survenue pendant le chargement du top score' })
 				return undefined
 			}
 

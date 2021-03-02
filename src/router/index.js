@@ -15,6 +15,16 @@ const routes = [
 		name: 'Login',
 		component: () => import('@/views/Home/Login.vue'),
 	},
+	{
+		path: AppPaths.GAME_CREATE,
+		name: 'GameCreate',
+		component: () => import('@/views/Game/Create.vue'),
+	},
+	{
+		path: AppPaths.GAME_PLAY,
+		name: 'GamePlay',
+		component: () => import('@/views/Game/Play.vue'),
+	},
 ]
 
 const router = createRouter({
