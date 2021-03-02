@@ -3,7 +3,7 @@
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
 			<router-link class="btn-primary mt-3" :to="createGamePath"
-				>Commencer une<br />nouvelle partie prout</router-link
+				>Commencer une<br />nouvelle partie</router-link
 			>
 		</div>
 
