@@ -46,14 +46,18 @@ export default {
 	name: 'Home',
 	data() {
 		return {
+			level: 1,
 			games: [],
 			interval: undefined,
 		}
 	},
 
 	async created() {
-		this.games = await this.getGames(1)
-		// this.interval = setInterval(() => this.getGames(), 10000)
+		this.games = await this.getGames(this.level)
+		// this.interval = setInterval(() => this.getGames(this.level), 60000)
+	},
+	destoyed() {
+		clearInterval(this.interval)
 	},
 	methods: {
 		getGames: async (level) => {
@@ -70,8 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .home {
 	text-align: center;

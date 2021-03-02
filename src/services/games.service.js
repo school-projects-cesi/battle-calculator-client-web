@@ -6,9 +6,10 @@ import authConfig from '@/common/connection'
 const url = '/games'
 
 // main
+const get = (id) => axios.get(`${url}/${id}`, authConfig())
 const best = (level) => axios.get(`${url}/best/${level}`, authConfig())
 const post = (create) => axios.post(url, create, authConfig())
 
 // exports
-const service = { post, best }
+const service = { get, post, best }
 export default service

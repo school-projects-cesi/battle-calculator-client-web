@@ -82,8 +82,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .login {
 	h1 {

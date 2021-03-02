@@ -1,35 +1,60 @@
 <template>
-	<div class="create">
+	<div class="play">
 		<h1>Play</h1>
+		<div v-if="loading" class="mt-3 flex center">
+			<Spinner />
+		</div>
+		<div v-if="!loading">
+			<div class="full-center">
+				<span class="countdown">{{ countdown }}</span>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import gameService from '@/services/games.service'
-import levelService from '@/services/levels.service'
+import service from '@/services/games.service'
+import Spinner from '@/components/Spinner.vue'
+import StartPlaySound from '@/assets/audios/start-play.ogg'
 
 export default {
-	name: 'Home',
+	components: {
+		Spinner,
+	},
 	data() {
-		return {}
+		return {
+			game: undefined,
+			loading: true,
+			countdown: 3,
+		}
+	},
+	async created() {
+		this.game = await this.getGame()
+		if (this.game) {
+			this.loading = false
+			const audio = new Audio(StartPlaySound)
+			audio.play()
+			this.countDownTimer()
+		}
 	},
 	methods: {
-		getLevels: async () => {
-			const response = await levelService.get()
-			if (response.status !== 200 || !response.data) {
-				alert('Une erreur est survenue pendant le chargement des niveaux')
-				return undefined
+		countDownTimer() {
+			if (this.countdown > 0) {
+				setTimeout(() => {
+					if (this.countdown !== 1) this.countdown -= 1
+					else this.countdown = 'Go'
+					this.countDownTimer()
+				}, 1000)
 			}
-
-			return response.data.result
 		},
-
-		async onSubmit() {
+		async getGame() {
 			try {
-				const response = await gameService.post({ level: this.levelType })
-				console.log(response.data.result)
-			} catch (err) {
-				console.log(err.message)
+				const response = await service.get(this.$route.params.id ?? 0)
+				return response.data.result
+			} catch {
+				this.$swal({ icon: 'error', title: "Cette partie n'existe pas" })
+				this.$router.push({ name: 'Home' })
+				return undefined
 			}
 		},
 	},
@@ -37,18 +62,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
-.create {
+.play {
 	text-align: center;
 
-	.form-container {
-		background-color: rgba(255, 255, 255, 0.2);
-		padding: space(5) space(12);
-		border-radius: $border-radius;
-		width: 100%;
-		max-width: 550px;
+	.full-center {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 40vh;
+
+		.countdown {
+			font-weight: 800;
+			font-size: 15rem;
+			text-transform: uppercase;
+		}
 	}
 }
 </style>

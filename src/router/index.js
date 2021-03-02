@@ -28,6 +28,7 @@ const routes = [
 		path: AppPaths.GAME_PLAY,
 		name: 'GamePlay',
 		component: Play,
+		props: true,
 		meta: { requiresAuth: true },
 	},
 ]
