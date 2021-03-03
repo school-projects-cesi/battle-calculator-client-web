@@ -28,11 +28,12 @@
 					<ErrorMessage class="input-error" name="password" />
 				</div>
 				<button class="btn-primary small mt-3 w-100" type="submit">Login</button>
+				<p class="mt-3">
+					pour créer un compte, cliquez
+					<router-link :to="{ name: 'Register' }">ICI</router-link>
+				</p>
 			</div>
 		</Form>
-		<div class="buttons">
-			<router-link class="btn-primary mt-3" :to="registerPath">S'enregistrer</router-link>
-		</div>
 	</div>
 </template>
 
