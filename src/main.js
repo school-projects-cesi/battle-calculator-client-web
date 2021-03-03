@@ -2,6 +2,7 @@
 import { createApp } from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
 
+import background from '@/common/plugins/background'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -20,4 +21,9 @@ const alertOptions = {
 }
 
 // main
-createApp(App).use(store).use(router).use(VueSweetalert2, alertOptions).mount('#app')
+createApp(App)
+	.use(store)
+	.use(router)
+	.use(VueSweetalert2, alertOptions)
+	.use(background)
+	.mount('#app')

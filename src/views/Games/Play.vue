@@ -1,7 +1,6 @@
 <template>
 	<div class="play">
-		<h1 class="header" :class="{ animate: !loading }">Play</h1>
-		<div v-if="loading" class="mt-3 flex center">
+		<div v-if="loading" class="mt-3 full-center">
 			<Spinner />
 		</div>
 		<div v-if="!loading && !countdownReady" class="full-center">
@@ -10,10 +9,10 @@
 
 		<div v-if="!loading && countdownReady" class="wrapper">
 			<div class="content">
-				<div class="calcul">25 + 12 = ?</div>
+				<div class="calcul">{{ score.operation }} = ?</div>
 				<div class="result">
 					<div class="value">
-						<i style="font-weight: 100">taper votre résultat</i>
+						<i>{{ value || 'taper votre résultat' }}</i>
 					</div>
 				</div>
 			</div>
@@ -26,9 +25,11 @@
 </template>
 
 <script>
-import service from '@/services/games.service'
+import gameService from '@/services/games.service'
+import scoreService from '@/services/scores.service'
 import Spinner from '@/components/Spinner.vue'
 // import StartPlaySound from '@/assets/audios/start-play.ogg'
+import { IsNumberKeyWithoutDecimal } from '@/utils/number'
 
 export default {
 	components: {
@@ -39,26 +40,48 @@ export default {
 			game: undefined,
 			score: undefined,
 			loading: false,
-			countdownReady: true,
+			countdownReady: false,
 			countdown: 3,
 			timerInterval: undefined,
+			backgroundTimeout: undefined,
 			timer: 0,
+			value: '',
 		}
 	},
+	mounted() {
+		window.addEventListener('keydown', this.onInput)
+	},
+	unmounted() {
+		window.removeEventListener('keydown', this.onInput)
+	},
 	async created() {
-		// this.game = await this.getGame()
-		// if (this.game) {
-		// 	this.loading = false
-		// 	const audio = new Audio(StartPlaySound)
-		// 	await audio.play()
-		// 	this.countDownTimer()
-		// }
-		this.countDownEnd()
+		this.game = await this.getGame()
+		if (this.game && this.game.score) {
+			if (!this.game.started) {
+				this.score = this.game.score
+				this.loading = false
+				// const audio = new Audio(StartPlaySound)
+				// await audio.play()
+				this.countDownTimer()
+			} else {
+				this.$swal({
+					icon: 'error',
+					title: 'Vous ne pouvez pas rejoindre une partie en cours.',
+				})
+				this.$router.push({ name: 'Home' })
+			}
+		} else {
+			this.$swal({
+				icon: 'error',
+				title: 'Une erreur est suvenue pendant la récupération de la partie.',
+			})
+			this.$router.push({ name: 'Home' })
+		}
 	},
 	methods: {
 		async getGame() {
 			try {
-				const response = await service.get(this.$route.params.id ?? 0)
+				const response = await gameService.get(this.$route.params.id ?? 0)
 				return response.data.result
 			} catch {
 				this.$swal({ icon: 'error', title: "Cette partie n'existe pas" })
@@ -73,6 +96,7 @@ export default {
 					else {
 						this.countdownReady = true
 						this.countdown = 'Go'
+						this.countDownEnd()
 					}
 					this.countDownTimer()
 				}, 1000)
@@ -85,6 +109,43 @@ export default {
 				if (this.timer >= 60) this.timerEnd()
 			}, 1000)
 		},
+		onInput(e) {
+			// escape
+			const code = e.keyCode || e.charCode
+			if (code === 27) this.value = ''
+			else if (code === 13) this.validResult(this.value)
+			// delete
+			else if (code === 8 || code === 46) this.value = this.value.slice(0, -1)
+			else if (IsNumberKeyWithoutDecimal(e.key)) this.value += e.key
+
+			// win test
+			if (code === 87) {
+				// winAudio.currentTime = 0
+				// winAudio.play()
+			}
+		},
+		async validResult(result) {
+			const response = await scoreService.add(this.game.id, this.score.id, {
+				result,
+			})
+			// TODO: ajouter un try catch
+
+			// check score
+			if (parseInt(result, 10) === this.score.result) {
+				this.$background({ color: 'var(--success-color)' })
+				this.$router.push({ name: 'Home' })
+			} else {
+				this.$background({ color: 'var(--danger-color)' })
+			}
+
+			// reset timeout
+			if (this.backgroundTimeout) clearTimeout(this.backgroundTimeout)
+			this.backgroundTimeout = setTimeout(() => this.$background.reset(), 450)
+
+			// reset
+			this.value = ''
+			this.score = response.data.result.next
+		},
 		timerEnd() {
 			clearInterval(this.timerInterval)
 		},
@@ -95,10 +156,17 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/tools/_functions.scss';
 @import '@/assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_mixins.scss';
+@import '@/assets/styles/tools/_typography.scss';
 
 .play {
 	text-align: center;
 	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 
 	.header {
 		letter-spacing: 0rem;
@@ -131,6 +199,8 @@ export default {
 		z-index: 5;
 		transition: background-color 0.5s;
 		height: 100%;
+		opacity: 0;
+		animation: slideIn 0.6s normal forwards ease-in-out;
 
 		.content {
 			display: flex;
@@ -154,9 +224,12 @@ export default {
 				align-items: center;
 				text-align: center;
 				white-space: nowrap;
+				font-family: $font-alt;
+				text-transform: uppercase;
+				color: $color-text-muted;
 
 				.value {
-					font-size: 3.5rem;
+					font-size: 2.5rem;
 				}
 			}
 		}
@@ -168,7 +241,7 @@ export default {
 			position: absolute;
 			top: 0;
 			left: 0;
-			transition: width 1s linear;
+			transition: width 1.1s linear;
 
 			.progress-bar {
 				width: 0;

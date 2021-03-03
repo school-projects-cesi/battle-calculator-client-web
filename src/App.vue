@@ -1,6 +1,8 @@
 <template>
 	<div class="main-container container-full">
-		<div class="background"></div>
+		<div class="background">
+			<div v-background class="background-extra"></div>
+		</div>
 		<div style="height: 100%">
 			<NavBar />
 			<router-view />

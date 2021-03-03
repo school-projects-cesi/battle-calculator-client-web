@@ -54,9 +54,11 @@ export default {
 
 	async created() {
 		this.games = await this.getGames(this.level)
-		// this.interval = setInterval(() => this.getGames(this.level), 60000)
 	},
-	destoyed() {
+	mounted() {
+		// this.interval = setInterval(() => this.getGames(this.level), 1000)
+	},
+	unmouted() {
 		clearInterval(this.interval)
 	},
 	methods: {
