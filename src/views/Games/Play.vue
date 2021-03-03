@@ -28,7 +28,9 @@
 import gameService from '@/services/games.service'
 import scoreService from '@/services/scores.service'
 import Spinner from '@/components/Spinner.vue'
-// import StartPlaySound from '@/assets/audios/start-play.ogg'
+import StartPlaySound from '@/assets/audios/play-start.ogg'
+import CorrectPlaySound from '@/assets/audios/play-correct.ogg'
+import WrongPlaySound from '@/assets/audios/play-wrong.ogg'
 import { IsNumberKeyWithoutDecimal } from '@/utils/number'
 
 export default {
@@ -46,10 +48,21 @@ export default {
 			backgroundTimeout: undefined,
 			timer: 0,
 			value: '',
+			audios: {
+				start: undefined,
+				correct: undefined,
+				wrong: undefined,
+			},
 		}
 	},
 	mounted() {
 		window.addEventListener('keydown', this.onInput)
+		this.audios = {
+			start: new Audio(StartPlaySound),
+			correct: new Audio(CorrectPlaySound),
+			wrong: new Audio(WrongPlaySound),
+		}
+		Object.values(this.audios).forEach((audio) => audio.load())
 	},
 	unmounted() {
 		window.removeEventListener('keydown', this.onInput)
@@ -60,8 +73,7 @@ export default {
 			if (!this.game.started) {
 				this.score = this.game.score
 				this.loading = false
-				// const audio = new Audio(StartPlaySound)
-				// await audio.play()
+				await this.audios.start.play()
 				this.countDownTimer()
 			} else {
 				this.$swal({
@@ -117,12 +129,6 @@ export default {
 			// delete
 			else if (code === 8 || code === 46) this.value = this.value.slice(0, -1)
 			else if (IsNumberKeyWithoutDecimal(e.key)) this.value += e.key
-
-			// win test
-			if (code === 87) {
-				// winAudio.currentTime = 0
-				// winAudio.play()
-			}
 		},
 		async validResult(result) {
 			const response = await scoreService.add(this.game.id, this.score.id, {
@@ -133,9 +139,12 @@ export default {
 			// check score
 			if (parseInt(result, 10) === this.score.result) {
 				this.$background({ color: 'var(--success-color)' })
-				this.$router.push({ name: 'Home' })
+				this.audios.correct.currentTime = 0
+				await this.audios.correct.play()
 			} else {
 				this.$background({ color: 'var(--danger-color)' })
+				this.audios.wrong.currentTime = 0
+				await this.audios.wrong.play()
 			}
 
 			// reset timeout
@@ -147,7 +156,9 @@ export default {
 			this.score = response.data.result.next
 		},
 		timerEnd() {
+			window.removeEventListener('keydown', this.onInput)
 			clearInterval(this.timerInterval)
+			// TODO: go next display
 		},
 	},
 }
