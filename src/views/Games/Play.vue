@@ -32,6 +32,7 @@ import StartPlaySound from '@/assets/audios/play-start.ogg'
 import CorrectPlaySound from '@/assets/audios/play-correct.ogg'
 import WrongPlaySound from '@/assets/audios/play-wrong.ogg'
 import { IsNumberKeyWithoutDecimal } from '@/utils/number'
+import { isNotEmptyString } from '@/utils/string'
 
 export default {
 	components: {
@@ -118,21 +119,23 @@ export default {
 			this.timerInterval = setInterval(() => {
 				this.timer += 1
 
-				if (this.timer >= 60) this.timerEnd()
+				if (this.timer >= this.game.chrono) this.timerEnd()
 			}, 1000)
 		},
 		onInput(e) {
 			// escape
 			const code = e.keyCode || e.charCode
 			if (code === 27) this.value = ''
-			else if (code === 13) this.validResult(this.value)
+			else if (code === 13) {
+				if (isNotEmptyString(this.value)) this.validResult(this.value)
+			}
 			// delete
 			else if (code === 8 || code === 46) this.value = this.value.slice(0, -1)
 			else if (IsNumberKeyWithoutDecimal(e.key)) this.value += e.key
 		},
 		async validResult(result) {
 			const response = await scoreService.add(this.game.id, this.score.id, {
-				result,
+				result: isNotEmptyString(result) ? result : 0,
 			})
 			// TODO: ajouter un try catch
 
@@ -158,7 +161,7 @@ export default {
 		timerEnd() {
 			window.removeEventListener('keydown', this.onInput)
 			clearInterval(this.timerInterval)
-			// TODO: go next display
+			this.$router.push({ name: 'GameEnd', params: { id: this.game.id } })
 		},
 	},
 }

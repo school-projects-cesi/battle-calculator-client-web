@@ -9,7 +9,8 @@ const url = '/games'
 const get = (id) => axios.get(`${url}/${id}`, authConfig())
 const best = (level) => axios.get(`${url}/best/${level}`, authConfig())
 const post = (create) => axios.post(url, create, authConfig())
+const end = (id) => axios.patch(`${url}/${id}/end`, undefined, authConfig())
 
 // exports
-const service = { get, post, best }
+const service = { get, post, best, end }
 export default service

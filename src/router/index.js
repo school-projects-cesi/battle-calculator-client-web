@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import Home from '@/views/Home/Home.vue'
-import { Create, Play } from '@/views/Games'
+import { Create, Play, End } from '@/views/Games'
 import AppPaths from './paths'
 
 // main
@@ -28,6 +28,13 @@ const routes = [
 		path: AppPaths.GAME_PLAY,
 		name: 'GamePlay',
 		component: Play,
+		props: true,
+		meta: { requiresAuth: true },
+	},
+	{
+		path: AppPaths.GAME_END,
+		name: 'GameEnd',
+		component: End,
 		props: true,
 		meta: { requiresAuth: true },
 	},

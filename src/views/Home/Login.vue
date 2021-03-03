@@ -64,11 +64,11 @@ export default {
 				if (response) {
 					const { data } = response
 					if (data) {
-						const { errors, title } = data
-						if (errors) {
-							Object.entries(errors).forEach(([key, error]) =>
-								actions.setFieldError(key.toLowerCase(), error)
-							)
+						const { validationErrors, title } = data
+						if (validationErrors) {
+							validationErrors.forEach((error) => {
+								actions.setFieldError(error.name.toLowerCase(), error.reason)
+							})
 						} else if (title) this.$swal({ icon: 'error', title })
 					}
 					return
