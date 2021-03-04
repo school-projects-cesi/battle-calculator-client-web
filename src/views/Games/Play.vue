@@ -123,6 +123,9 @@ export default {
 			}, 1000)
 		},
 		onInput(e) {
+			// only when game is started
+			if (this.loading || !this.countdownReady) return
+
 			// escape
 			const code = e.keyCode || e.charCode
 			if (code === 27) this.value = ''
@@ -134,10 +137,10 @@ export default {
 			else if (IsNumberKeyWithoutDecimal(e.key)) this.value += e.key
 		},
 		async validResult(result) {
+			// TODO: ajouter un try catch
 			const response = await scoreService.add(this.game.id, this.score.id, {
 				result: isNotEmptyString(result) ? result : 0,
 			})
-			// TODO: ajouter un try catch
 
 			// check score
 			if (parseInt(result, 10) === this.score.result) {
@@ -213,8 +216,7 @@ export default {
 		z-index: 5;
 		transition: background-color 0.5s;
 		height: 100%;
-		opacity: 0;
-		animation: slideIn 0.6s normal forwards ease-in-out;
+		overflow: hidden;
 
 		.content {
 			display: flex;
@@ -222,6 +224,8 @@ export default {
 			justify-content: center;
 			align-items: center;
 			height: 100%;
+			animation: slideIn 0.65s normal forwards ease-in-out;
+			opacity: 0;
 
 			.calcul {
 				font-weight: 900;

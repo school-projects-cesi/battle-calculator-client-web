@@ -1,6 +1,6 @@
 // main
 const IsNumberKeyWithoutDecimal = (value) => {
-	const regExp = /^([0-9]|,|\.)$/gi
+	const regExp = /^([0-9]|,|\.|-)$/gi
 	return value.match(regExp)
 }
 
