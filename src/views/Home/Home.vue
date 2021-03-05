@@ -58,7 +58,7 @@ export default {
 	mounted() {
 		// this.interval = setInterval(() => this.getGames(this.level), 1000)
 	},
-	unmouted() {
+	beforeUnmount() {
 		clearInterval(this.interval)
 	},
 	methods: {

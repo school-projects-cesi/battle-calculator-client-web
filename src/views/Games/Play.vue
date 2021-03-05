@@ -65,7 +65,7 @@ export default {
 		}
 		Object.values(this.audios).forEach((audio) => audio.load())
 	},
-	unmounted() {
+	beforeUnmount() {
 		window.removeEventListener('keydown', this.onInput)
 	},
 	async created() {
