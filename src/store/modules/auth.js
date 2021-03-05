@@ -13,12 +13,9 @@ const getters = {
 }
 
 const actions = {
-	async Register({ dispatch }, form) {
-		await service.register(form)
-		const UserForm = new FormData()
-		UserForm.append('username', form.username)
-		UserForm.append('password', form.password)
-		await dispatch('LogIn', UserForm)
+	async Register({ commit }, user) {
+		const response = await service.register(user)
+		await commit('setUser', response.data?.result?.token)
 	},
 
 	async LogIn({ commit }, user) {

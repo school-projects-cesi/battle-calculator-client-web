@@ -16,6 +16,11 @@ const routes = [
 		component: () => import('@/views/Home/Login.vue'),
 	},
 	{
+		path: AppPaths.REGISTER,
+		name: 'Register',
+		component: () => import('@/views/Home/Register.vue'),
+	},
+	{
 		path: AppPaths.GAME_CREATE,
 		name: 'GameCreate',
 		component: () => import('@/views/Game/Create.vue'),

@@ -1,13 +1,22 @@
 <template>
-	<div class="login">
-		<h1>Connexion</h1>
+	<div class="register">
+		<h1>Créer un compte</h1>
 		<Form
 			v-slot="{ errors }"
 			class="flex center column mt-2"
-			:validation-schema="loginSchema"
+			:validation-schema="registerSchema"
 			@submit="onSubmit"
 		>
 			<div class="form-container flex center column">
+				<div class="form-group">
+					<label>Nom d'utilisateur</label>
+					<Field
+						name="username"
+						placeholder="Nom d'utilisateur"
+						:class="{ 'is-invalid': errors.username }"
+					/>
+					<ErrorMessage class="input-error" name="username" />
+				</div>
 				<div class="form-group">
 					<label>Email</label>
 					<Field
@@ -27,11 +36,19 @@
 					/>
 					<ErrorMessage class="input-error" name="password" />
 				</div>
-				<button class="btn-primary small mt-3 w-100" type="submit">Login</button>
-				<p class="mt-3">
-					pour créer un compte, cliquez
-					<router-link :to="{ name: 'Register' }">ICI</router-link>
-				</p>
+
+				<!-- <div class="form-group">
+					<label>Confirmation mot de passe :</label>
+					<Field
+						name="confirmPassword"
+						type="password"
+						placeholder="Confirmation mot de passe"
+						:class="{ 'is-invalid': errors.confirmPassword }"
+					/>
+					<ErrorMessage class="input-error" name="confirmPassword" />
+				</div> -->
+
+				<button class="btn-primary small mt-3 w-100" type="submit">S'enregistrer</button>
 			</div>
 		</Form>
 	</div>
@@ -40,7 +57,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { Field, Form, ErrorMessage } from 'vee-validate'
-import loginSchema from '@/services/models/login.model'
+import registerSchema from '@/services/models/register.model'
 import router from '@/router'
 import AppPaths from '@/router/paths'
 
@@ -51,36 +68,34 @@ export default {
 		ErrorMessage,
 	},
 	data() {
-		return {
-			loginSchema,
-			registerPath: AppPaths.REGISTER,
-		}
+		return { registerSchema }
 	},
 	methods: {
-		...mapActions(['LogIn']),
+		...mapActions(['Register']),
 		async onSubmit(values, actions) {
 			try {
-				await this.LogIn({
-					username: values.email,
+				await this.Register({
+					username: values.username,
+					email: values.email,
 					password: values.password,
+					confirmPassword: values.password,
 				})
-				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
+				this.$swal({ icon: 'success', title: 'Enregistrement réussi !', text: 'Bienvenue' })
 				router.push(AppPaths.HOME)
 			} catch (err) {
 				const { response } = err
 				if (response) {
 					const { data } = response
 					if (data) {
-						const { errors, title } = data
-						if (errors) {
-							Object.entries(errors).forEach(([key, error]) =>
-								actions.setFieldError(key.toLowerCase(), error)
-							)
+						const { validationErrors, title } = data
+						if (validationErrors) {
+							validationErrors.forEach((error) => {
+								actions.setFieldError(error.name.toLowerCase(), error.reason)
+							})
 						} else if (title) this.$swal({ icon: 'error', title })
 					}
 					return
 				}
-
 				this.$swal({ icon: 'error', title: 'Une erreur est survenue.' })
 			}
 		},
@@ -92,7 +107,7 @@ export default {
 @import '../../assets/styles/tools/_functions.scss';
 @import '../../assets/styles/tools/_variables.scss';
 
-.login {
+.register {
 	h1 {
 		text-align: center;
 	}
