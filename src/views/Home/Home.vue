@@ -2,7 +2,7 @@
 	<div class="home">
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
-			<router-link class="btn-primary mt-3" :to="createGamePath"
+			<router-link class="btn-primary mt-3" :to="{ name: 'GameCreate' }"
 				>Commencer une<br />nouvelle partie</router-link
 			>
 		</div>
@@ -31,7 +31,7 @@
 						</td>
 						<td class="text-left">{{ game.userName }}</td>
 						<td>{{ game.score }}</td>
-						<td>{{ game.date }}</td>
+						<td>{{ moment(game.date).fromNow() }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -41,27 +41,27 @@
 
 <script>
 import service from '@/services/games.service'
-import AppPath from '@/router/paths'
 import moment from 'moment'
 
 export default {
 	name: 'Home',
 	data() {
 		return {
+			level: 1,
 			games: [],
 			interval: undefined,
-			createGamePath: AppPath.GAME_CREATE,
 		}
 	},
 
 	async created() {
-		const result = await this.getGames(1)
-		result.forEach((game) => {
-			game.date = moment(game.date).locale('fr').fromNow()
-		})
-
-		this.games = result
-		this.interval = setInterval(() => this.getGames(1), 10000)
+		moment().locale('fr')
+		this.games = await this.getGames(this.level)
+	},
+	mount() {
+		this.interval = setInterval(() => this.getGames(this.level), 10000)
+	},
+	beforeUnmount() {
+		clearInterval(this.interval)
 	},
 	methods: {
 		getGames: async (level) => {
@@ -78,8 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .home {
 	text-align: center;
