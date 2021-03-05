@@ -31,7 +31,7 @@
 						</td>
 						<td class="text-left">{{ game.userName }}</td>
 						<td>{{ game.score }}</td>
-						<td>{{ game.date }}</td>
+						<td>{{ moment(game.date).fromNow() }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -41,6 +41,7 @@
 
 <script>
 import service from '@/services/games.service'
+import moment from 'moment'
 
 export default {
 	name: 'Home',
@@ -53,10 +54,11 @@ export default {
 	},
 
 	async created() {
+		moment().locale('fr')
 		this.games = await this.getGames(this.level)
 	},
-	mounted() {
-		// this.interval = setInterval(() => this.getGames(this.level), 1000)
+	mount() {
+		this.interval = setInterval(() => this.getGames(this.level), 10000)
 	},
 	beforeUnmount() {
 		clearInterval(this.interval)
