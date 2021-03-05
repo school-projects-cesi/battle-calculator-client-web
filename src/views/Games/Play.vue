@@ -139,7 +139,7 @@ export default {
 		async validResult(result) {
 			// TODO: ajouter un try catch
 			const response = await scoreService.add(this.game.id, this.score.id, {
-				result: isNotEmptyString(result) ? result : 0,
+				result: isNotEmptyString(result) ? result.replace(',', '.') : 0,
 			})
 
 			// check score
