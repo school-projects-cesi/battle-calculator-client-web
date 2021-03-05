@@ -42,6 +42,7 @@
 <script>
 import service from '@/services/games.service'
 import AppPath from '@/router/paths'
+import moment from 'moment'
 
 export default {
 	name: 'Home',
@@ -54,8 +55,13 @@ export default {
 	},
 
 	async created() {
-		this.games = await this.getGames(1)
-		// this.interval = setInterval(() => this.getGames(), 10000)
+		const result = await this.getGames(1)
+		result.forEach((game) => {
+			game.date = moment(game.date).locale('fr').fromNow()
+		})
+
+		this.games = result
+		this.interval = setInterval(() => this.getGames(1), 10000)
 	},
 	methods: {
 		getGames: async (level) => {
