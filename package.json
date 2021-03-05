@@ -11,6 +11,7 @@
 	"dependencies": {
 		"axios": "^0.21.1",
 		"core-js": "^3.6.5",
+		"feather-icons": "^4.28.0",
 		"sweetalert2": "^10.15.5",
 		"vee-validate": "^4.2.1",
 		"vue": "^3.0.0",

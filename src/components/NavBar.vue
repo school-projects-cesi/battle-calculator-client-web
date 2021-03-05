@@ -1,25 +1,29 @@
 <template>
-	<div v-if="isLoggedIn" class="Navbar">
-		{{ isLoggedIn ? 'LOGGED' : 'PAS LOGGED' }}
+	<div v-if="isLoggedIn" class="Navbar mb-4">
+		<button class="btn-icon pt-0 pb-0 mr-3" @click="activateDisableSound()">
+			<icon v-if="soundActivated" type="volume-2" />
+			<icon v-else type="volume-x" />
+		</button>
+		<button class="btn-icon mr-3">
+			<icon type="edit" />
+		</button>
+		<button class="btn-icon mr-3" @click="logout()">
+			<icon type="log-out" />
+		</button>
 		{{ username }}
-		<i @click="logout()"></i>
-		<LogoutIcon />
 	</div>
 </template>
 
 <script>
 import service from '@/services/users.service'
-import LogoutIcon from '@/assets/images/icons/logout.svg'
 import AppPaths from '../router/paths'
 
 export default {
 	name: 'NavBar',
-	components: {
-		LogoutIcon,
-	},
 	data() {
 		return {
 			username: '',
+			soundActivated: true,
 		}
 	},
 	computed: {
@@ -40,6 +44,14 @@ export default {
 			const response = await service.me()
 			return response.data.result.username
 		},
+		activateDisableSound() {
+			if (this.soundActivated) {
+				this.soundActivated = false
+			} else {
+				this.soundActivated = true
+			}
+			console.log(this.soundActivated)
+		},
 	},
 }
 </script>
@@ -50,18 +62,12 @@ export default {
 
 .Navbar {
 	text-align: right;
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: space(5) space(12);
-	border-radius: $border-radius;
-	width: 100%;
-	max-width: 550px;
-	display: flex;
-	align-items: end;
+	vertical-align: baseline;
+	align-items: center;
 
 	.buttons {
-		display: flex;
-		justify-content: right;
-		margin: space(12) 0;
+		border: none;
+		border-radius: 50px;
 	}
 }
 </style>

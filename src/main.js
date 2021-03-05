@@ -1,7 +1,7 @@
 // imports
 import { createApp } from 'vue'
 import VueSweetalert2 from 'vue-sweetalert2'
-
+import Icon from '@/components/Icon.vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -20,4 +20,9 @@ const alertOptions = {
 }
 
 // main
-createApp(App).use(store).use(router).use(VueSweetalert2, alertOptions).mount('#app')
+createApp(App)
+	.use(store)
+	.use(router)
+	.use(VueSweetalert2, alertOptions)
+	.component('icon', Icon)
+	.mount('#app')
