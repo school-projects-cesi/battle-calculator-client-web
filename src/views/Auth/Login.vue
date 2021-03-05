@@ -30,7 +30,7 @@
 				<button class="btn-primary small mt-3 w-100" type="submit">Login</button>
 				<p class="mt-3">
 					pour créer un compte, cliquez
-					<router-link :to="{ name: 'Register' }">ICI</router-link>
+					<router-link class="link" :to="{ name: 'Register' }">ici</router-link>
 				</p>
 			</div>
 		</Form>

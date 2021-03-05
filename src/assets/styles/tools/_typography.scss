@@ -66,7 +66,7 @@ h4 {
 	font-weight: bold;
 }
 
-a {
+a.link {
 	color: $color-contrast;
 	&:hover {
 		text-decoration: underline;
@@ -105,7 +105,7 @@ small {
 	color: $color-red;
 }
 .text-muted {
-	color: $color-light;
+	color: $color-text-muted;
 }
 .text-uppercase {
 	text-transform: uppercase;
