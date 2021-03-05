@@ -66,9 +66,12 @@ h4 {
 	font-weight: bold;
 }
 
-p,
 a {
-	opacity: $color-text-dark;
+	color: $color-contrast;
+	&:hover {
+		text-decoration: underline;
+		color: darken($color-contrast, 20%);
+	}
 }
 
 small {
