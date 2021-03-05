@@ -16,12 +16,12 @@ const routes = [
 	{
 		path: AppPaths.LOGIN,
 		name: 'Login',
-		component: () => import('@/views/Home/Login.vue'),
+		component: () => import('@/views/Auth/Login.vue'),
 	},
 	{
 		path: AppPaths.REGISTER,
 		name: 'Register',
-		component: () => import('@/views/Home/Register.vue'),
+		component: () => import('@/views/Auth/Register.vue'),
 	},
 	{
 		path: AppPaths.GAME_CREATE,
