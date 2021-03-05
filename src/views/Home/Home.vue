@@ -31,7 +31,9 @@
 						</td>
 						<td class="text-left">{{ game.userName }}</td>
 						<td>{{ game.score }}</td>
-						<td>{{ moment(game.date).fromNow() }}</td>
+						<td>
+							{{ moment.utc(game.date).local().fromNow() }}
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -52,9 +54,14 @@ export default {
 			interval: undefined,
 		}
 	},
+	computed: {
+		moment: () => {
+			moment.locale('fr')
+			return moment
+		},
+	},
 
 	async created() {
-		moment().locale('fr')
 		this.games = await this.getGames(this.level)
 	},
 	mount() {
