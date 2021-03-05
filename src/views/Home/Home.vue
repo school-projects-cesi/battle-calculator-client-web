@@ -2,7 +2,7 @@
 	<div class="home">
 		<h1 class="title">Battle Calculator</h1>
 		<div class="buttons">
-			<router-link class="btn-primary mt-3" :to="createGamePath"
+			<router-link class="btn-primary mt-3" :to="{ name: 'GameCreate' }"
 				>Commencer une<br />nouvelle partie</router-link
 			>
 		</div>
@@ -41,21 +41,25 @@
 
 <script>
 import service from '@/services/games.service'
-import AppPath from '@/router/paths'
 
 export default {
 	name: 'Home',
 	data() {
 		return {
+			level: 1,
 			games: [],
 			interval: undefined,
-			createGamePath: AppPath.GAME_CREATE,
 		}
 	},
 
 	async created() {
-		this.games = await this.getGames(1)
-		// this.interval = setInterval(() => this.getGames(), 10000)
+		this.games = await this.getGames(this.level)
+	},
+	mounted() {
+		// this.interval = setInterval(() => this.getGames(this.level), 1000)
+	},
+	beforeUnmount() {
+		clearInterval(this.interval)
 	},
 	methods: {
 		getGames: async (level) => {
@@ -72,8 +76,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .home {
 	text-align: center;

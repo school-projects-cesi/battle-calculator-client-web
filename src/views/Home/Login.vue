@@ -41,8 +41,6 @@
 import { mapActions } from 'vuex'
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import loginSchema from '@/services/models/login.model'
-import router from '@/router'
-import AppPaths from '@/router/paths'
 
 export default {
 	components: {
@@ -53,7 +51,6 @@ export default {
 	data() {
 		return {
 			loginSchema,
-			registerPath: AppPaths.REGISTER,
 		}
 	},
 	methods: {
@@ -65,17 +62,17 @@ export default {
 					password: values.password,
 				})
 				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
-				router.push(AppPaths.HOME)
+				this.$router.push({ name: 'Home' })
 			} catch (err) {
 				const { response } = err
 				if (response) {
 					const { data } = response
 					if (data) {
-						const { errors, title } = data
-						if (errors) {
-							Object.entries(errors).forEach(([key, error]) =>
-								actions.setFieldError(key.toLowerCase(), error)
-							)
+						const { validationErrors, title } = data
+						if (validationErrors) {
+							validationErrors.forEach((error) => {
+								actions.setFieldError(error.name.toLowerCase(), error.reason)
+							})
 						} else if (title) this.$swal({ icon: 'error', title })
 					}
 					return
@@ -89,20 +86,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .login {
 	h1 {
 		text-align: center;
-	}
-
-	.form-container {
-		background-color: rgba(255, 255, 255, 0.2);
-		padding: space(5) space(12);
-		border-radius: $border-radius;
-		width: 100%;
-		max-width: 550px;
 	}
 }
 </style>
