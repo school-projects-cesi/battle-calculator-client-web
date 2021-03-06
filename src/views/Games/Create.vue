@@ -11,18 +11,18 @@
 						</option>
 					</select>
 				</div>
-				<button class="btn-primary small mt-3 w-100" type="submit">Créer la partie</button>
+				<button class="btn-primary small mt-3 w-100" type="submit">
+					Démarrer la partie
+				</button>
 			</div>
 		</Form>
 	</div>
 </template>
 
 <script>
+import { Form } from 'vee-validate'
 import gameService from '@/services/games.service'
 import levelService from '@/services/levels.service'
-import { Form } from 'vee-validate'
-import router from '@/router'
-import AppPaths from '@/router/paths'
 
 export default {
 	components: {
@@ -44,8 +44,9 @@ export default {
 			const response = await levelService.get()
 			if (response.status !== 200) {
 				this.$swal({ icon: 'error', title: 'Erreur de chargement des niveaux' })
-				return undefined
+				return []
 			}
+
 			return response.data.result
 		},
 
@@ -54,14 +55,13 @@ export default {
 				const response = await gameService.post({ level: this.levelType })
 				if (response.status === 200) {
 					this.$swal({ icon: 'success', title: 'Partie créée !' })
-					router.push({
-						path: AppPaths.GAME_PLAY,
-						query: { id: response.data.result.id },
+					this.$router.push({
+						name: 'GamePlay',
+						params: { id: response.data.result.id },
 					})
 				}
 			} catch (err) {
 				this.$swal({ icon: 'error', title: "Erreur lors de la création d'une partie" })
-				console.log(err)
 			}
 		},
 	},
@@ -69,18 +69,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/tools/_functions.scss';
-@import '../../assets/styles/tools/_variables.scss';
+@import '@/assets/styles/tools/_functions.scss';
+@import '@/assets/styles/tools/_variables.scss';
 
 .create {
 	text-align: center;
-
-	.form-container {
-		background-color: rgba(255, 255, 255, 0.2);
-		padding: space(5) space(12);
-		border-radius: $border-radius;
-		width: 100%;
-		max-width: 550px;
-	}
 }
 </style>
