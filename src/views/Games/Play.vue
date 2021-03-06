@@ -129,7 +129,7 @@ export default {
 			// escape
 			const code = e.keyCode || e.charCode
 			if (code === 27) this.value = ''
-			else if (code === 13) {
+			else if (code === 13 || code === 32) {
 				if (isNotEmptyString(this.value)) this.validResult(this.value)
 			}
 			// delete

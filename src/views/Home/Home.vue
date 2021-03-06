@@ -63,9 +63,9 @@ export default {
 
 	async created() {
 		this.games = await this.getGames(this.level)
-	},
-	mount() {
-		this.interval = setInterval(() => this.getGames(this.level), 10000)
+		this.interval = setInterval(async () => {
+			this.games = await this.getGames(this.level)
+		}, 10000)
 	},
 	beforeUnmount() {
 		clearInterval(this.interval)
