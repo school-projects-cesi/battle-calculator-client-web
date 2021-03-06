@@ -1,29 +1,30 @@
 <template>
-	<div v-if="isLoggedIn" class="Navbar mb-4">
-		<button class="btn-icon pt-0 pb-0 mr-2 buttons" @click="activateDisableSound()">
-			<icon v-if="soundActivated" type="volume-2" />
+	<div v-if="isLoggedIn" class="navbar mb-4">
+		<button class="btn-icon navbar-button" @click="activateVolume()">
+			<icon v-if="volume" type="volume-2" />
 			<icon v-else type="volume-x" />
 		</button>
-		<button class="btn-icon mr-2 buttons">
+		<button class="btn-icon navbar-button">
 			<icon type="edit" />
 		</button>
-		<button class="btn-icon mr-2 buttons" @click="logout()">
+		<button class="btn-icon navbar-button" @click="logout()">
 			<icon type="log-out" />
 		</button>
-		{{ username }}
+		<div>
+			{{ user?.username }}
+		</div>
 	</div>
 </template>
 
 <script>
 import service from '@/services/users.service'
-import AppPaths from '../router/paths'
 
 export default {
 	name: 'NavBar',
 	data() {
 		return {
-			username: '',
-			soundActivated: true,
+			user: undefined,
+			volume: true,
 		}
 	},
 	computed: {
@@ -32,25 +33,19 @@ export default {
 		},
 	},
 	async created() {
-		this.username = await this.getUser()
-		console.log(this.username)
+		this.user = await this.getUser()
 	},
 	methods: {
 		async logout() {
 			await this.$store.dispatch('LogOut')
-			this.$router.push(AppPaths.LOGIN)
+			this.$router.push({ name: 'Login' })
 		},
 		getUser: async () => {
 			const response = await service.me()
-			return response.data.result.username
+			return response.data.result
 		},
-		activateDisableSound() {
-			if (this.soundActivated) {
-				this.soundActivated = false
-			} else {
-				this.soundActivated = true
-			}
-			console.log(this.soundActivated)
+		activateVolume() {
+			this.volume = !this.volume
 		},
 	},
 }
@@ -60,20 +55,13 @@ export default {
 @import '@/assets/styles/tools/_functions.scss';
 @import '@/assets/styles/tools/_variables.scss';
 
-.Navbar {
-	text-align: right;
-	vertical-align: middle;
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 
-	.buttons {
-		text-align: center;
-		width: 55px;
-		height: 55px;
-		border-radius: $border-radius;
-		&:hover {
-			text-decoration: underline;
-			background-color: $color-dark;
-			background-color: rgba(255, 255, 255, 0.2);
-		}
+	.navbar-button {
+		margin-right: space(1.5);
 	}
 }
 </style>
