@@ -1,13 +1,13 @@
 <template>
 	<div v-if="isLoggedIn" class="Navbar mb-4">
-		<button class="btn-icon pt-0 pb-0 mr-3" @click="activateDisableSound()">
+		<button class="btn-icon pt-0 pb-0 mr-2 buttons" @click="activateDisableSound()">
 			<icon v-if="soundActivated" type="volume-2" />
 			<icon v-else type="volume-x" />
 		</button>
-		<button class="btn-icon mr-3">
+		<button class="btn-icon mr-2 buttons">
 			<icon type="edit" />
 		</button>
-		<button class="btn-icon mr-3" @click="logout()">
+		<button class="btn-icon mr-2 buttons" @click="logout()">
 			<icon type="log-out" />
 		</button>
 		{{ username }}
@@ -62,12 +62,18 @@ export default {
 
 .Navbar {
 	text-align: right;
-	vertical-align: baseline;
-	align-items: center;
+	vertical-align: middle;
 
 	.buttons {
-		border: none;
-		border-radius: 50px;
+		text-align: center;
+		width: 55px;
+		height: 55px;
+		border-radius: $border-radius;
+		&:hover {
+			text-decoration: underline;
+			background-color: $color-dark;
+			background-color: rgba(255, 255, 255, 0.2);
+		}
 	}
 }
 </style>
