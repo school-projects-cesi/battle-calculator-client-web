@@ -52,3 +52,13 @@
 		font-size: 1.25rem;
 	}
 }
+
+.btn-icon {
+	padding: 7px 15px;
+	border-radius: $border-radius;
+	transition: $transition;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+}
