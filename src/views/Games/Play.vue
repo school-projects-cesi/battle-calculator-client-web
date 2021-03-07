@@ -54,6 +54,7 @@ export default {
 				correct: undefined,
 				wrong: undefined,
 			},
+			canInput: true,
 		}
 	},
 	mounted() {
@@ -124,7 +125,7 @@ export default {
 		},
 		onInput(e) {
 			// only when game is started
-			if (this.loading || !this.countdownReady) return
+			if (this.loading || !this.countdownReady || !this.canInput) return
 
 			// escape
 			const code = e.keyCode || e.charCode
@@ -137,6 +138,7 @@ export default {
 			else if (IsNumberKeyWithoutDecimal(e.key)) this.value += e.key
 		},
 		async validResult(result) {
+			this.canInput = false
 			// TODO: ajouter un try catch
 			const response = await scoreService.add(this.game.id, this.score.id, {
 				result: isNotEmptyString(result) ? result.replace(',', '.') : 0,
@@ -160,6 +162,8 @@ export default {
 			// reset
 			this.value = ''
 			this.score = response.data.result.next
+
+			this.canInput = true
 		},
 		timerEnd() {
 			window.removeEventListener('keydown', this.onInput)

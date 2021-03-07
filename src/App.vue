@@ -1,5 +1,5 @@
 <template>
-	<div class="main-container container-full">
+	<div class="main-container container-full pt-1">
 		<div class="background">
 			<div v-background class="background-extra"></div>
 		</div>
