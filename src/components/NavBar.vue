@@ -32,9 +32,26 @@ export default {
 			return this.$store.getters.isAuthenticated
 		},
 	},
+
 	async created() {
-		this.user = await this.getUser()
+		if (this.isLoggedIn) {
+			this.user = await this.getUser()
+		}
+
+		this.unwatch = this.$store.watch(
+			(state) => state.auth.user,
+			async () => {
+				if (this.isLoggedIn) {
+					this.user = await this.getUser()
+				}
+			}
+		)
 	},
+
+	beforeUnmount() {
+		this.unwatch()
+	},
+
 	methods: {
 		async logout() {
 			await this.$store.dispatch('LogOut')

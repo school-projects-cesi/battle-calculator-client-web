@@ -61,7 +61,7 @@ export default {
 					username: values.email,
 					password: values.password,
 				})
-				this.$swal({ icon: 'success', title: 'Connexion réussi !', text: 'Bienvenue' })
+				this.$swal({ icon: 'success', title: 'Connexion réussie !', text: 'Bienvenue' })
 				this.$router.push({ name: 'Home' })
 			} catch (err) {
 				const { response } = err
