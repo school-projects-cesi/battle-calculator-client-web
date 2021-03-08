@@ -33,7 +33,9 @@ export default {
 		},
 	},
 	async created() {
-		this.user = await this.getUser()
+		if (this.isLoggedIn) {
+			this.user = await this.getUser()
+		}
 	},
 	methods: {
 		async logout() {
