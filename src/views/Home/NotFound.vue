@@ -1,12 +1,20 @@
 <template>
-	<div class="notFound mt-5 pt-5">
-		<h1>En voilà encore un qui s'est perdu dans les pages.</h1>
-		<img class="logo mt-5" :src="img" />
+	<div class="notFound">
+		<h1>Erreur 404</h1>
+		<div class="mt-5 image-button">
+			<img class="logo" :src="img" />
+			<div class="button-holder">
+				<router-link class="btn-primary small" :to="{ name: 'Home' }"
+					>retourner à l'accueil</router-link
+				>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import image from '@/assets/images/logo404.png'
+import AwwSound from '@/assets/audios/notFound-aww.ogg'
 
 export default {
 	name: 'NotFound',
@@ -14,6 +22,12 @@ export default {
 		return {
 			img: image,
 		}
+	},
+
+	async created() {
+		const audio = new Audio(AwwSound)
+		audio.load()
+		await audio.play()
 	},
 }
 </script>
@@ -24,9 +38,19 @@ export default {
 
 .notFound {
 	text-align: center;
+
 	.logo {
-		height: 250px;
-		width: 250px;
+		height: 350px;
+		width: 550px;
+	}
+	.image-button {
+		position: relative;
+	}
+	.button-holder {
+		position: absolute;
+		top: calc(50% + 62px);
+		left: calc(50% + 95px);
+		transform: translate(-50%, -50%);
 	}
 }
 </style>
