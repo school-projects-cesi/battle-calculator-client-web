@@ -41,6 +41,7 @@
 import { mapActions } from 'vuex'
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import loginSchema from '@/services/models/login.model'
+import ohSound from '@/assets/audios/login-oh.ogg'
 
 export default {
 	components: {
@@ -64,6 +65,9 @@ export default {
 				this.$swal({ icon: 'success', title: 'Connexion réussie !', text: 'Bienvenue' })
 				this.$router.push({ name: 'Home' })
 			} catch (err) {
+				const audio = new Audio(ohSound)
+				audio.load()
+				await audio.play()
 				const { response } = err
 				if (response) {
 					const { data } = response

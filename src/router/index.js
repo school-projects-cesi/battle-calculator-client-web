@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import Home from '@/views/Home/Home.vue'
+import NotFound from '@/views/Home/NotFound.vue'
 import { Create, Play, End } from '@/views/Games'
 import AppPaths from './paths'
 
@@ -42,6 +43,15 @@ const routes = [
 		component: End,
 		props: true,
 		meta: { requiresAuth: true },
+	},
+	{
+		path: '/404',
+		name: 'NotFound',
+		component: NotFound,
+	},
+	{
+		path: '/:catchAll(.*)',
+		redirect: '/404',
 	},
 ]
 
