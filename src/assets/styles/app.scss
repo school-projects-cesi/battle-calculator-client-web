@@ -1,0 +1,76 @@
+// Outils
+// ==================
+@import 'tools/functions';
+@import 'tools/variables';
+@import 'tools/reset';
+@import 'tools/mixins';
+@import 'tools/layout';
+@import 'tools/typography';
+@import 'tools/animations';
+
+// Generic
+// ==================
+:root {
+	--primary-color: #{$color};
+	--primary-color-gradient: #{$color-gradient};
+	--contrast-color: #{$color-contrast};
+	--contrast-color-dark: #{$color-contrast-dark};
+	--contrast-color-light: #{$color-contrast-light};
+
+	--primary-dark-color: rgba(0, 0, 0, 0.15);
+	--text-color: #{$color-text};
+	--success-color: #{$color-green};
+	--danger-color: #{$color-red};
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: $base-font-size * 1px;
+	height: 100%;
+}
+body {
+	font-family: $font;
+	font-size: 1.1rem;
+	font-weight: 500;
+	color: $color-text;
+	line-height: 1.6;
+	background: transparent;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	position: relative;
+	min-height: 100%;
+	height: 100%;
+}
+#app {
+	min-height: 100%;
+}
+.background {
+	background: var(--primary-color-gradient);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+
+	.background-extra {
+		height: 100%;
+		width: 100%;
+		transition: all 0.25s ease-in-out;
+	}
+}
+
+::selection {
+	background: $color-contrast-light;
+	color: $color-text-dark;
+}
+
+// Modules
+// ==================
+@import 'modules/button';
+@import 'modules/form';
+@import 'modules/alert';

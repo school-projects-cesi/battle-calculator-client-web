@@ -1,0 +1,112 @@
+// Variables
+// ==================
+$font: 'Lato', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+	Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+$font-alt: 'Poppins', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+	Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+// Font face
+// ==================
+// @include font-face(
+// 	'Roboto',
+// 	'../../fonts/Roboto/Roboto',
+// 	400 700,
+// 	null,
+// 	woff2 eot
+// );
+// @include font-face(
+// 	'Montserrat',
+// 	'../../fonts/Montserrat/Montserrat',
+// 	500 700 900,
+// 	null,
+// 	woff2 eot
+// );
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+.section-title {
+	font-family: $font-alt;
+	font-size: rem(18);
+	font-weight: bold;
+	border-bottom: 1px solid $color-border;
+	padding-bottom: space(1);
+	margin-bottom: space(3);
+}
+
+h1 {
+	font-family: $font-alt;
+	font-weight: 800;
+	font-style: normal;
+	text-transform: uppercase;
+	font-size: rem(42);
+	line-height: 1.2;
+}
+
+h2 {
+	font-weight: 800;
+	font-style: normal;
+	font-size: rem(32);
+	line-height: 1.2;
+}
+
+h3 {
+	font-style: normal;
+	font-weight: normal;
+	font-size: rem(24);
+
+	strong {
+		font-weight: bold;
+	}
+}
+
+h4 {
+	font-family: $font-alt;
+	font-weight: bold;
+}
+
+a.link {
+	color: $color-contrast;
+	&:hover {
+		text-decoration: underline;
+		color: darken($color-contrast, 20%);
+	}
+}
+
+small {
+	color: $color-text-muted;
+	font-size: 0.9rem;
+}
+
+.title {
+	@extend h1;
+	font-weight: 900;
+	font-size: rem(65);
+	@include text3d($color-text);
+
+	@include down('medium') {
+		font-size: rem(50);
+	}
+}
+
+// Alignements
+// ==================
+.text-left {
+	text-align: left !important;
+}
+.text-right {
+	text-align: right !important;
+}
+.text-center {
+	text-align: center !important;
+}
+.text-danger {
+	color: $color-red;
+}
+.text-muted {
+	color: $color-text-muted;
+}
+.text-uppercase {
+	text-transform: uppercase;
+}

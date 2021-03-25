@@ -1,17 +1,21 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/airbnb',
-  ],
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-  },
-};
+	root: true,
+	env: {
+		node: true,
+	},
+	extends: [
+		'plugin:vue/recommended',
+		'@vue/airbnb',
+		'plugin:prettier/recommended',
+		'prettier/vue',
+	],
+	parserOptions: {
+		parser: 'babel-eslint',
+	},
+	rules: {
+		'no-console': 'off',
+		'no-debugger': 'off',
+		'no-underscore-dangle': 'off',
+		'no-param-reassign': 'off',
+	},
+}
