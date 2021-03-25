@@ -26,11 +26,11 @@
 
 ## À propos du projet
 
-Front-end de l'application.
+Partie Front-end de l'application.
 
 **Sources**
 
-[Back-End](https://github.com/school-projects-cesi/battle-calculator)
+[Back-End](https://github.com/school-projects-cesi/battle-calculator-api)
 
 ![Home](docs/images/screenshot-home.png)
 _Page d'accueil_
